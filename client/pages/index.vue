@@ -17,8 +17,8 @@
         <div class="medium-12 cell">
           <div class="text-center">
             <h1>{{ message }}</h1>
-            <p>This is Nuxt + R.</p>
-            <nuxt-link to="/iris" class="button">Iris</nuxt-link>
+            <p>This is new test.</p>
+            <nuxt-link to="/randomforest" class="button">RandomForest</nuxt-link>
           </div>
         </div>
       </div>
