@@ -1,4 +1,4 @@
-#!/usr/bin/Rscript
+#!env Rscript
 
 # Load packages.
 library(jsonlite)
@@ -64,15 +64,17 @@ function(req, res) {
     return(res)
   }
 
+  url <- paste('http://127.0.0.1:3000/iris?', raw, sep="")
+
   # Parse the query.
   # https://cran.r-project.org/web/packages/urltools/vignettes/urltools.html
   params <- param_get(
-    raw,
+    url,
     parameter_names = c(
-      'plot',
-      'species',
-      'measurement',
-      'grid'
+      "plot",
+      "species",
+      "measurement",
+      "grid"
     )
   )
   plot <- params$plot

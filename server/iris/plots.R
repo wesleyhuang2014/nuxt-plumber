@@ -1,4 +1,4 @@
-#!/usr/bin/Rscript
+#!env Rscript
 
 # http://ggplot2.tidyverse.org/reference/geom_point.html
 plotScatter <- function(data, measurement) {

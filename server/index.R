@@ -1,4 +1,4 @@
-#!/usr/bin/Rscript
+#!env Rscript
 
 library(plumber)
 r <- plumb('app.R')  # Where 'app.R' is the location of the file shown above
