@@ -9,6 +9,7 @@ library(urltools)
 
 # Import dependencies.
 source('iris/plots.R')
+source('rf/predict.R')
 
 # https://github.com/trestletech/plumber/issues/66
 #* @filter cors
@@ -145,4 +146,94 @@ function(req, res) {
 
   dev.off()
   readBin(tmp, "raw", n = file.info(tmp)$size)
+}
+
+#* Predict
+#* @serializer unboxedJSON
+#* @post /randomforest
+function(req, res) {
+  raw <- req$postBody
+
+  str(req$postBody)
+
+  # Filter if the raw was specified.
+  if (length(raw) == 0) {
+    str('stop now!')
+    message <- "Missing params."
+    status <- 400 # Bad request
+
+    output <- list(
+      status = jsonlite::unbox(status),
+      data = list(
+        message = jsonlite::unbox(message)
+      )
+    )
+
+    res$setHeader('Content-type', 'application/json')
+    res$status <- status
+    res$body <- toJSON(output)
+    return(res)
+  }
+
+  url <- paste('http://127.0.0.1:3000/randomforest?', raw, sep="")
+
+  # Parse the query.
+  # https://cran.r-project.org/web/packages/urltools/vignettes/urltools.html
+  params <- param_get(
+    url,
+    parameter_names = c(
+      "age",
+      "sex",
+      "bmi",
+      "smoking",
+      "drinking",
+      "hypertension",
+      "t2dm",
+      "hyperlipidemia",
+      "tc",
+      "hdl",
+      "tg",
+      "ldl",
+      "sbp",
+      "dbp",
+      "fpg"
+    )
+  )
+
+  str(params$age)
+
+  patient <- data.frame(
+    Age=c(as.numeric(params$age)),
+    sex=c(as.numeric(params$sex)),
+    BMI=c(as.numeric(params$bmi)),
+    smoking=c(as.numeric(params$smoking)),
+    drinking=c(as.numeric(params$drinking)),
+    hypertension=c(as.numeric(params$hypertension)),
+    T2DM=c(as.numeric(params$t2dm)),
+    hyperlipidemia=c(as.numeric(params$hyperlipidemia)),
+    TC=c(as.numeric(params$tc)),
+    HDL=c(as.numeric(params$hdl)),
+    TG=c(as.numeric(params$tg)),
+    LDL=c(as.numeric(params$ldl)),
+    SBP=c(as.numeric(params$sbp)),
+    DBP=c(as.numeric(params$dbp)),
+    FPG=c(as.numeric(params$fpg))
+    )
+
+  # str(patient)
+  # group <- predictRF(patient)
+  message <- predictRF(patient)
+  status <- 200 # Bad request
+
+  output <- list(
+    status = jsonlite::unbox(status),
+    data = list(
+      message = jsonlite::unbox(message)
+    )
+  )
+
+  res$setHeader('Content-type', 'application/json')
+  res$status <- status
+  res$body <- toJSON(output)
+  return(res)
 }

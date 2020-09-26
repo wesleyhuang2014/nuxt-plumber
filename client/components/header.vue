@@ -8,7 +8,7 @@
 
           <ul class="menu align-center menu-header">
             <li><nuxt-link to="/">Home</nuxt-link></li>
-            <li><nuxt-link to="/iris">Iris</nuxt-link></li>
+            <li><nuxt-link to="/randomforest">病理预测</nuxt-link></li>
           </ul>
 
         </div>

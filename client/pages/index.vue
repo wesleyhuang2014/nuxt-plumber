@@ -18,7 +18,7 @@
           <div class="text-center">
             <h1>{{ message }}</h1>
             <p>This is new test.</p>
-            <nuxt-link to="/randomforest" class="button">RandomForest</nuxt-link>
+            <nuxt-link to="/randomforest" class="button">病理预测</nuxt-link>
           </div>
         </div>
       </div>
@@ -35,7 +35,7 @@ export default {
   async mounted () {
     // Initiate foundation.
     // Must do it after Vue has rendered the view.
-    $(document).foundation()
+    //$(document).foundation()
   },
   async asyncData () {
     var {data} = await axios.get('/')
@@ -48,7 +48,7 @@ export default {
   },
   head () {
     return {
-      title: 'Nuxt + R',
+      title: '病理预测',
       meta: [
         { hid: 'description', name: 'description', content: 'Home page' }
       ],
